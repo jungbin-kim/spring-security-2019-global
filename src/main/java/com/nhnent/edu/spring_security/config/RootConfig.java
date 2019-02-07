@@ -40,7 +40,6 @@ public class RootConfig {
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-        // TODO : #1 change database name.
         dataSource.setUrl("jdbc:h2:~/springsecurity2;INIT=RUNSCRIPT FROM 'classpath:/script/schema.sql'");
         dataSource.setUsername("sa");
         dataSource.setPassword("");

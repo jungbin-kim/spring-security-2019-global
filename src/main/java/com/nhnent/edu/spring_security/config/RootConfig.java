@@ -30,7 +30,6 @@ import java.util.Properties;
 
 </beans>
  */
-// TODO : #3 EnableJpaRepositories, EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.nhnent.edu.spring_security.repository")
 @EnableTransactionManagement
 @Configuration
@@ -41,14 +40,14 @@ public class RootConfig {
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:~/springsecurity;INIT=RUNSCRIPT FROM 'classpath:/script/schema.sql'");
+        // TODO : #1 change database name.
+        dataSource.setUrl("jdbc:h2:~/springsecurity2;INIT=RUNSCRIPT FROM 'classpath:/script/schema.sql'");
         dataSource.setUsername("sa");
         dataSource.setPassword("");
 
         return dataSource;
     }
 
-    // TODO : #4 JPA-related bean configuration
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();

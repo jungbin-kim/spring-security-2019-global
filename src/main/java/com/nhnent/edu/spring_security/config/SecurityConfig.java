@@ -1,6 +1,7 @@
 package com.nhnent.edu.spring_security.config;
 
 import com.nhnent.edu.spring_security.encoder.Sha256PasswordEncoder;
+import com.nhnent.edu.spring_security.oauth2.CustomAuthorizationRequestResolver;
 import com.nhnent.edu.spring_security.security.CustomLoginFailureHandler;
 import com.nhnent.edu.spring_security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,10 +79,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .requiresChannel()
                 .anyRequest().requiresInsecure()
                 .and()
-            // TODO : #5 oauth2Login()
             .oauth2Login()
                 .clientRegistrationRepository(clientRegistrationRepository())
                 .authorizedClientService(authorizedClientService())
+                // TODO : #1 authorizationRequestResolver 설정
+                .authorizationEndpoint()
+                    .authorizationRequestResolver(customAuthorizationRequestResolver())
+                    .and()
                 .and()
 //            .formLogin()
 //                .loginPage("/login/form")
@@ -127,7 +131,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomLoginFailureHandler();
     }
 
-    // TODO : #3 ClientRegistrationRepository with ClientRegistration.
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
         return new InMemoryClientRegistrationRepository(ClientRegistration.withRegistrationId("payco")
@@ -143,10 +146,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                                                           .build());
     }
 
-    // TODO : #4 OAuth2AuthorizedClientService
     @Bean
     public OAuth2AuthorizedClientService authorizedClientService() {
         return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
+    }
+
+    // TODO : #2 customize OAuth2AuthorizationRequestResolver.
+    @Bean
+    public CustomAuthorizationRequestResolver customAuthorizationRequestResolver() {
+        return new CustomAuthorizationRequestResolver(clientRegistrationRepository());
     }
 
 }

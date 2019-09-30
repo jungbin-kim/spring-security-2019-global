@@ -56,6 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * TODO : #3 실습 - 관리툴/비공개프로젝트/공개 프로젝트 페이지를 secure로 설정해보세요.
                  */
                 /*.anyRequest().requiresSecure()*/
+                .antMatchers("/admin/**").requiresSecure()
+                .antMatchers("/private-project/**").requiresSecure()
+                .antMatchers("/project/**").requiresSecure()
                 .anyRequest().requiresInsecure()
                 .and()
             .formLogin()
@@ -63,14 +66,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
                 .and()
             /* TODO : #4 실습 - enable csrf */
-            .csrf()
-                .disable()
+//            .csrf()
+//                .disable()
             /*
              * TODO : #5 실습 - response headers
              */
-            /*.headers()
+            .headers()
                 .defaultsDisabled()
-                .cacheControl()*/
+                .cacheControl()
         ;
     }
 

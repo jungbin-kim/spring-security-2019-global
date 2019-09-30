@@ -52,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * TODO : #5 실습 - `/notice` 로그인을 하지 않아도 접근 가능하도록 설정하세요.
                  */
                 // TODO : #4 index 페이지는 로그인 없이도 접근 가능하지만, 다른 모든 페이지는 로그인해야만 접근 가능함.
+                .antMatchers("/notice").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -86,6 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .oauth2Login()
                 // TODO : #4 실습 - clientRegistrationRepository와 authorizedClientService를 설정해주세요.
+                .clientRegistrationRepository(clientRegistrationRepository())
+                .authorizedClientService(authorizedClientService())
                 .and()
 //            .formLogin()
 //                .loginPage("/login/form")
@@ -135,19 +137,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public ClientRegistrationRepository clientRegistrationRepository() {
         // TODO : #2 실습 - ClientRegistrationRepository 구현체를 생성하세요.
         //        아래 github() 메서드를 활용하세요.
-        return null;
+        return new InMemoryClientRegistrationRepository(github());
     }
 
     @Bean
     public OAuth2AuthorizedClientService authorizedClientService() {
         // TODO : #3 실습 - OAuth2AuthorizedClientService 구현체를 생성하세요.
-        return null;
+        return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
     }
 
     private ClientRegistration github() {
         return CommonOAuth2Provider.GITHUB.getBuilder("github")
                                           .userNameAttributeName("name")
                                           // TODO : #1 - github에서 생성한 어플리케이션 정보를 참조해서 client_id와 client_secret을 등록하세요.
+                                          .clientId("341b42662d3921897c1b")
+                                          .clientSecret("1042673e9d5ae1b462dc744cc405404ca0242433")
                                           .build();
     }
 

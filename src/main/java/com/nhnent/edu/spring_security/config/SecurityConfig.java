@@ -49,7 +49,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity(debug = true)
 // TODO : #6 `@EnableGlobalMethodSecurity(prePostEnabled = true)`
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired(required = false)
     private CustomUserDetailsService customUserDetailsService;
